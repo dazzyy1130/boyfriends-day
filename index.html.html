@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>For My Love 🤍</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@500;600&family=Playfair+Display:wght@500;600&family=Poppins:wght@400;500&display=swap');
+
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;min-height:100%;font-family:Poppins,sans-serif;color:#566580}
+body{background:linear-gradient(135deg,#edf5ff,#f5f2ff,#fffaf3)}
+
+.page{
+ display:none;min-height:100svh;padding:18px 14px 62px;
+ align-items:center;justify-content:center;text-align:center;
+ flex-direction:column;overflow:hidden
+}
+.page.active{display:flex}
+
+h1,h2{font-family:'Playfair Display',serif;color:#596989;margin:6px 0 11px}
+h1{font-size:clamp(1.7rem,7vw,2.3rem)}
+h2{font-size:clamp(1.4rem,6vw,1.85rem)}
+
+.small{font:1.25rem Caveat;color:#7d89a5;margin:4px}
+.text{max-width:470px;font-size:.84rem;line-height:1.5}
+
+.card,.letter{
+ width:min(92vw,480px);background:#fffdfa;
+ border:1px solid #e0e5ef;border-radius:17px;padding:12px 14px;
+ box-shadow:0 8px 25px #8998b51c;font-size:.76rem;line-height:1.5
+}
+.letter{
+ display:none;margin-top:8px;background:#fffaf4;
+ max-height:185px;overflow:auto
+}
+
+.btn{
+ border:0;background:#dfe9fa;color:#53637f;border-radius:25px;
+ padding:8px 14px;margin:5px;font-family:Poppins;font-size:.75rem;
+ cursor:pointer
+}
+
+.nav{
+ position:fixed;bottom:7px;left:0;right:0;text-align:center;z-index:20
+}
+.nav button{
+ border:0;background:#fff;color:#63728d;border-radius:20px;
+ padding:6px 12px;box-shadow:0 3px 12px #8998b522
+}
+.nav span{font-size:.7rem;margin:0 7px}
+
+/* ENVELOPE */
+.envelope{
+ width:190px;height:125px;position:relative;margin:15px;cursor:pointer
+}
+.envbody{
+ position:absolute;inset:0;background:#fff;border:2px solid #c9d5e8;
+ border-radius:7px;box-shadow:0 10px 25px #8796ad2b
+}
+.flap{
+ position:absolute;top:0;left:0;width:100%;height:75%;
+ background:#e3ebf8;clip-path:polygon(0 0,50% 75%,100% 0);
+ transform-origin:top;transition:.8s;z-index:3
+}
+.envelope.open .flap{transform:rotateX(180deg)}
+.paper{
+ position:absolute;width:135px;height:80px;background:#fffaf0;
+ left:27px;top:30px;border:1px solid #ddd4c4;z-index:2;
+ transition:.8s;padding:8px;font:1rem Caveat
+}
+.envelope.open .paper{top:-45px}
+
+/* EYES */
+.eyeScene{position:relative;width:280px;height:115px;margin:8px}
+.eye{
+ position:absolute;width:105px;height:68px;background:white;
+ border:3px solid #64728b;border-radius:70% 30% 65% 35%;
+ overflow:hidden;box-shadow:0 7px 15px #53627d22
+}
+.eye.l{left:12px;transform:rotate(-7deg)}
+.eye.r{right:12px;transform:scaleX(-1) rotate(-7deg)}
+.eye:before{
+ content:"";position:absolute;width:43px;height:43px;background:#08090d;
+ border-radius:50%;left:30px;top:12px;
+ box-shadow:inset 0 0 0 5px #181a20,inset 0 0 0 9px #030407
+}
+.eye:after{
+ content:"";position:absolute;width:11px;height:11px;background:#fff;
+ border-radius:50%;left:39px;top:18px
+}
+.lashes{
+ position:absolute;top:-9px;left:0;width:100%;height:15px;
+ border-top:3px solid #59677e;border-radius:50%
+}
+
+/* FOOTBALL */
+.ball{font-size:5rem;display:inline-block;animation:ball 1.5s ease-in-out infinite}
+@keyframes ball{50%{transform:translateY(-14px) rotate(180deg)}}
+
+/* HEART */
+.heart{font-size:4.5rem;animation:pulse 1.5s infinite}
+@keyframes pulse{50%{transform:scale(1.12)}}
+
+/* KISSES / HUGS */
+.futureLove{
+ position:relative;width:290px;height:105px;margin:2px
+}
+.futureLove span{
+ position:absolute;font-size:2.5rem;animation:float 2.5s ease-in-out infinite
+}
+.futureLove span:nth-child(1){left:25px;top:35px}
+.futureLove span:nth-child(2){left:105px;top:8px;animation-delay:.4s}
+.futureLove span:nth-child(3){right:25px;top:40px;animation-delay:.8s}
+.futureLove span:nth-child(4){left:140px;top:65px;animation-delay:1.1s}
+@keyframes float{50%{transform:translateY(-8px) rotate(5deg)}}
+
+.voucher{
+ border:2px dashed #aebbd0;background:#fff;padding:13px;
+ border-radius:16px;width:min(90vw,430px);font-size:.78rem;line-height:1.5;
+ margin:4px
+}
+
+/* RINGS */
+.rings{font-size:4rem}
+
+/* MOMENTS */
+.moments{
+ width:min(90vw,470px);text-align:left;font-size:.76rem;line-height:1.5
+}
+.moments b{color:#697895}
+
+/* PUZZLE */
+.puzzle{display:grid;grid-template-columns:repeat(3,62px);gap:5px}
+.piece{
+ height:62px;background:#dfe9fa;border-radius:10px;
+ display:flex;align-items:center;justify-content:center;
+ font:1.3rem Caveat;cursor:pointer
+}
+.done{display:none;font:1.6rem Caveat;margin:9px}
+
+/* DOSA */
+.dosaScene{
+ position:relative;width:270px;height:150px;margin:2px auto
+}
+.dosa{
+ position:absolute;width:205px;height:72px;
+ left:8px;top:35px;
+ background:linear-gradient(150deg,#d9a75d,#f1cc88,#c58d46);
+ border-radius:55% 45% 48% 52%;
+ transform:rotate(-7deg);
+ box-shadow:inset 0 5px 10px #fff4c755,0 8px 15px #8e704522
+}
+.dosa:before{
+ content:"";position:absolute;inset:12px 18px;
+ border:3px dashed #c18b49;border-radius:50%;
+ opacity:.55
+}
+.dosa:after{
+ content:"";position:absolute;width:95px;height:18px;
+ left:53px;top:25px;border-radius:50%;
+ background:#e8bd75;box-shadow:0 9px 0 #dba75d,0 18px 0 #e7bd75
+}
+.sambar{
+ position:absolute;width:78px;height:78px;
+ right:12px;top:62px;border-radius:50%;
+ background:#d98b4b;border:7px solid #f5eee3;
+ box-shadow:0 5px 12px #8e704522
+}
+.sambar:before{
+ content:"";position:absolute;width:15px;height:8px;
+ background:#6e8d45;border-radius:50%;left:17px;top:25px;
+ box-shadow:24px 8px 0 #8b9f55,10px 25px 0 #d9ad48
+}
+
+/* SPIDER WEB */
+.webScene{position:relative;width:190px;height:130px;margin:4px}
+.webLine{
+ position:absolute;background:#aebbd0;height:2px;
+ transform-origin:left center
+}
+.w1{width:170px;left:10px;top:65px}
+.w2{width:150px;left:20px;top:65px;transform:rotate(45deg)}
+.w3{width:150px;left:20px;top:65px;transform:rotate(-45deg)}
+.w4{width:125px;left:33px;top:65px;transform:rotate(90deg)}
+.spiderHeart{
+ position:absolute;left:73px;top:45px;font-size:3rem
+}
+
+/* LOTUS */
+.lotus{position:relative;width:120px;height:100px;margin:5px}
+.petal{
+ position:absolute;width:42px;height:70px;background:#b69ad9;
+ border-radius:70% 30% 70% 30%;left:39px;top:10px;
+ transform-origin:50% 90%
+}
+.petal:nth-child(1){transform:rotate(-45deg)}
+.petal:nth-child(2){transform:rotate(-22deg)}
+.petal:nth-child(3){transform:rotate(0)}
+.petal:nth-child(4){transform:rotate(22deg)}
+.petal:nth-child(5){transform:rotate(45deg)}
+.petal:nth-child(6){transform:rotate(-67deg);background:#c8afe3}
+.petal:nth-child(7){transform:rotate(67deg);background:#c8afe3}
+</style>
+</head>
+
+<body>
+
+<!-- 1 -->
+<section class="page active" id="page1">
+ <div class="envelope" id="env" onclick="openEnvelope()">
+  <div class="envbody"></div>
+  <div class="paper">For my love... 🤍</div>
+  <div class="flap"></div>
+ </div>
+ <h1>I made something for you...</h1>
+ <p class="text">A tiny little corner of the internet made completely for you, my love. 🤍</p>
+ <button class="btn" onclick="next()">Open it ♡</button>
+</section>
+
+<!-- 2 -->
+<section class="page" id="page2">
+ <div class="small">for my favourite person...</div>
+ <h1>Happy Boyfriend's Day,<br>my love. 🤍</h1>
+ <div class="card">
+ Happy Boyfriend's Day to the boy who somehow became such an important part of my life.
+ You have given me so many little moments that I keep replaying in my head,
+ so much comfort when I needed it, and so many reasons to smile.
+ I hope you always know how deeply appreciated, loved and cherished you are.
+ This little website is my tiny way of putting some of those feelings somewhere you can actually see them. 🥹🤍
+ </div>
+ <button class="btn" onclick="letter(2)">Open my letter 💌</button>
+ <div class="letter" id="l2">
+ If I could give you one thing today, it would be the ability to see yourself through my eyes for just a moment.
+ Maybe then you'd understand why I adore you so much.
+ You are so incredibly special to me, and I am genuinely grateful that I get to call you mine.
+ I hope this day reminds you just how loved you are. 🤍
+ </div>
+</section>
+
+<!-- 3 -->
+<section class="page" id="page3">
+ <div class="small">There is something about them...</div>
+ <h2>I love your eyes. 👀</h2>
+ <div class="eyeScene">
+  <div class="eye l"><div class="lashes"></div></div>
+  <div class="eye r"><div class="lashes"></div></div>
+ </div>
+ <p class="text">
+ Maybe it's the way they change with your mood.
+ Maybe it's the way they look when you're genuinely happy.
+ Maybe I just like looking at them.
+ Either way... yes, THESE ones. 😭
+ </p>
+ <button class="btn" onclick="letter(3)">Open my letter 💌</button>
+ <div class="letter" id="l3">
+ I love the little expressions in your eyes and the way they somehow say so much without you even realizing it.
+ There are tiny details about you that I could never forget, and your eyes are definitely one of them.
+ I could look at them a hundred times and still find another little thing to adore. 🖤
+ </div>
+</section>
+
+<!-- 4 -->
+<section class="page" id="page4">
+ <div class="ball">⚽</div>
+ <h2>My favourite footballer. 🏆</h2>
+ <p class="text">
+ I adore watching you play, hearing you talk about football and seeing how much effort you put into something you love.
+ </p>
+ <button class="btn" onclick="letter(4)">Open my letter 💌</button>
+ <div class="letter" id="l4">
+ I hope you never forget how proud I am of you.
+ Not just when you win or get a trophy, but every time you show up, put in effort and keep going.
+ Seeing you happy after doing something you worked hard for genuinely makes me happy too.
+ I adore the footballer in you, but even more than that, I adore the person behind him. 🤍
+ </div>
+</section>
+
+<!-- 5 -->
+<section class="page" id="page5">
+ <div class="futureLove">
+  <span>💋</span><span>🤍</span><span>💋</span><span>🫂</span>
+ </div>
+
+ <h2>Kisses & hugs for my cutie. 🤍</h2>
+
+ <div class="voucher">
+  <b>FIRST KISS VOUCHER 💋</b><br><br>
+  Redeemable whenever we have our first kiss.<br><br>
+  No expiry date. 🤍
+ </div>
+
+ <div class="voucher">
+  <b>FIRST HUG VOUCHER 🫂</b><br><br>
+  Redeemable whenever we finally have our first proper hug.<br><br>
+  No expiry date. 🤍
+ </div>
+
+ <p class="small">
+  Because apparently we still have two very important firsts left to unlock 😭🤍
+ </p>
+
+ <button class="btn" onclick="letter(5)">Open my letter 💌</button>
+
+ <div class="letter" id="l5">
+  We haven't had our first kiss or our first proper hug yet,
+  so I'm saving those moments instead of pretending they're already memories.
+  Whenever they happen, I know they'll become two more little pieces of our story that I'll treasure.
+  Until then, these little vouchers are just my cute way of keeping those future firsts reserved for us. 🤍
+ </div>
+</section>
+
+<!-- 6 -->
+<section class="page" id="page6">
+ <div class="heart">♡</div>
+ <h2>Do you know how much I love you?</h2>
+ <p class="text">
+ Probably not. Because I don't think I've ever found a number big enough to explain it.
+ </p>
+ <button class="btn" onclick="letter(6)">Open my letter 💌</button>
+ <div class="letter" id="l6">
+ I love you in all the ordinary moments too — when we're talking nonsense,
+ when you're telling me about your day, when you're being annoying,
+ when you're being sweet, when you're tired, and when you don't even realize how much you mean to me.
+ It's in all those little moments that I feel it the most. 🤍
+ </div>
+</section>
+
+<!-- 7 -->
+<section class="page" id="page7">
+ <h2>100 little ways to say it...</h2>
+ <div class="text" id="hundred"></div>
+ <h2>I love you INFINITY. ∞</h2>
+ <button class="btn" onclick="letter(7)">Open my letter 💌</button>
+ <div class="letter" id="l7">
+ And after saying it a hundred times, I still feel like I haven't said it enough.
+ So here's the truth: I love you more than a list could ever explain.
+ No counting, no limit, no final number.
+ Just you, me and an absolutely ridiculous amount of love. ∞🤍
+ </div>
+</section>
+
+<!-- 8 -->
+<section class="page" id="page8">
+ <h2>Do you know how much you matter to me?</h2>
+ <div class="card">
+ You matter in ways that aren't always easy to put into words.
+ You're someone I think about, someone whose happiness matters to me,
+ someone whose bad days I want to make lighter and whose good days I want to celebrate loudly.
+ </div>
+ <button class="btn" onclick="letter(8)">Open my letter 💌</button>
+ <div class="letter" id="l8">
+ You've become a part of so many little thoughts in my day.
+ Something happens and I want to tell you.
+ Something makes me laugh and I think of you.
+ Something goes wrong and I want to know you're okay.
+ That's how much you matter to me — quietly, constantly and in ways I don't even always notice until I realize how often you cross my mind. 🤍
+ </div>
+</section>
+
+<!-- 9 -->
+<section class="page" id="page9">
+ <div class="heart">♡</div>
+ <h2>I love everything about you.</h2>
+ <p class="text">
+ Your little habits, your random messages, your football obsession,
+ your way of talking, your silly side, your caring side and all those tiny things that make you YOU.
+ </p>
+ <button class="btn" onclick="letter(9)">Open my letter 💌</button>
+ <div class="letter" id="l9">
+ I don't love just one version of you.
+ I love the happy you, the sleepy you, the chaotic you, the quiet you,
+ the football-obsessed you, the caring you and even the annoying you 😭.
+ It's all of those little pieces together that make you the person I fell for.
+ And honestly, I wouldn't replace any of them. 🤍
+ </div>
+</section>
+
+<!-- 10 -->
+<section class="page" id="page10">
+ <div class="ball">🏆</div>
+ <h2>You're my best boyfie.</h2>
+ <div class="card">
+ Not because you're perfect, but because you're you.
+ And somehow, being with you makes so many ordinary days feel special.
+ </div>
+ <button class="btn" onclick="letter(10)">Open my letter 💌</button>
+ <div class="letter" id="l10">
+ Thank you for every time you've listened to me, comforted me, checked on me,
+ made me laugh or simply stayed.
+ I notice those things. I remember them.
+ And I hope you know how much they mean to me.
+ I'm so incredibly proud to call you my boyfie,
+ and even prouder of the person you are. 🤍
+ </div>
+</section>
+
+<!-- 11 -->
+<section class="page" id="page11">
+ <div class="rings">💍💍</div>
+ <h2>Our little forever. 🤍</h2>
+ <div class="card">
+ No dramatic promises. No perfect fairytale.
+ Just a sincere little reminder that if life keeps giving us chapters together,
+ I'd love to keep choosing you through them.
+ </div>
+ <button class="btn" onclick="letter(11)">Open my letter 💌</button>
+ <div class="letter" id="l11">
+ I don't know exactly what every future chapter will look like,
+ and I don't need to pretend that I do.
+ What I do know is that what we have means a lot to me.
+ If life gives us the chance to keep growing together,
+ I would want to keep choosing you, supporting you and building beautiful memories with you.
+ These rings are just a tiny symbol of that feeling. 🤍
+ </div>
+</section>
+
+<!-- 12 -->
+<section class="page" id="page12">
+ <h2>Our little moments. 📸</h2>
+ <div class="moments">
+  <b>♡ First date</b> — one of the beginnings I'll always remember.<br>
+  <b>♡ Second date</b> — another little memory that became special because it was with you.<br>
+  <b>♡ Your bracelet</b> — a tiny thing that became such a meaningful memory.<br>
+  <b>♡ You pulling my cheeks 😭</b> — one of those silly moments I still remember.<br>
+  <b>♡ When you checked if I had a fever</b> — because your care shows up in the smallest things.<br>
+  <b>♡ Walking by your side</b> — simple, ordinary and somehow special.<br>
+  <b>♡ Sitting next to each other in the bus</b> — another tiny moment I wouldn't trade.<br>
+  <b>♡ Holding hands</b> — a little moment that meant much more than it looked like.<br>
+  <b>♡ Playing football together</b> — one more thing I get to put in our memory box.
+ </div>
+ <button class="btn" onclick="letter(12)">Open my letter 💌</button>
+ <div class="letter" id="l12">
+ When I think about us, I don't only think about the big moments.
+ I think about these tiny things.
+ The dates, the bracelet, your silly cheek pulling, you checking on me,
+ walking beside you, sitting next to you, holding hands and playing football together.
+ They're all little pieces of our story, and I genuinely want to cherish every bit of it. 🤍
+ </div>
+</section>
+
+<!-- 13 -->
+<section class="page" id="page13">
+ <h2>Put our heart together. 🧩</h2>
+ <div class="puzzle" id="puzzle"></div>
+ <div class="done" id="done">This is how you complete us. 🤍</div>
+
+ <button class="btn" onclick="letter(13)">Open my letter 💌</button>
+ <div class="letter" id="l13">
+ Some pieces of life seem ordinary until you meet the person who makes them special.
+ You somehow became one of those pieces for me.
+ And just like this little puzzle, things feel a little more complete when you're there. 🤍
+ </div>
+</section>
+
+<!-- 14 -->
+<section class="page" id="page14">
+ <div class="dosaScene">
+  <div class="dosa"></div>
+  <div class="sambar"></div>
+ </div>
+
+ <h2>If you were dosa...</h2>
+
+ <div class="card">
+  I'd become sambhar because THIS is the perfect match!!! 😭🤍
+ </div>
+
+ <p class="small">and because I know you love dosa 😭</p>
+
+ <button class="btn" onclick="letter(14)">Open my letter 💌</button>
+
+ <div class="letter" id="l14">
+  This is possibly the most unserious but accurate scientific discovery I've ever made:
+  dosa + sambhar = perfect match, therefore you + me = perfect match. 😭🤍
+  I love that we can have the sweetest moments and then immediately be completely ridiculous together.
+  I wouldn't have it any other way.
+ </div>
+</section>
+
+<!-- 15 -->
+<section class="page" id="page15">
+ <div class="webScene">
+  <div class="webLine w1"></div>
+  <div class="webLine w2"></div>
+  <div class="webLine w3"></div>
+  <div class="webLine w4"></div>
+  <div class="spiderHeart">🕸️🤍</div>
+ </div>
+
+ <h2>In every life I get to live...</h2>
+
+ <div class="card">
+  I'd want to be yours in each of my lives I get to live. 🤍
+ </div>
+
+ <button class="btn" onclick="letter(15)">Open my letter 💌</button>
+
+ <div class="letter" id="l15">
+  If every life came with different roads, different places and different versions of us,
+  I'd still hope somehow our paths crossed again.
+  I'd want to find you, know you, laugh with you and fall for the person you are all over again.
+  Out of every possible little story, I'd still want one where I get to be yours. 🤍
+ </div>
+</section>
+
+<!-- 16 -->
+<section class="page" id="page16">
+ <div class="lotus">
+  <i class="petal"></i><i class="petal"></i><i class="petal"></i>
+  <i class="petal"></i><i class="petal"></i><i class="petal"></i><i class="petal"></i>
+ </div>
+
+ <h2>Thank you for being you. 🤍</h2>
+
+ <div class="card">
+  I'm so GRATEFUL and GLAD to have you.<br><br>
+  I'm so much proud of you.<br><br>
+  Being your partner was one of the best decisions ever.
+ </div>
+
+ <button class="btn" onclick="letter(16)">Open my final letter 💌</button>
+
+ <div class="letter" id="l16">
+  Thank you for being exactly who you are.
+  Thank you for the comfort, the laughs, the care, the memories,
+  the random conversations and every tiny moment you've given me.
+  I'm so grateful and so glad that I have you in my life.
+  I'm so, so proud of you — always.
+  And if I had to choose again, I'd still choose being your partner.
+  Happy Boyfriend's Day, my love.
+  I love you more than this little website could ever fit. 🤍
+ </div>
+
+ <h1>Happy Boyfriend's Day,<br>my love. 🤍</h1>
+ <div class="small">forever your batkuu ♡</div>
+</section>
+
+<!-- NAVIGATION -->
+<div class="nav">
+ <button onclick="prev()">←</button>
+ <span id="counter">1 / 16</span>
+ <button onclick="next()">→</button>
+</div>
+
+<script>
+let current=1;
+
+function show(n){
+ if(n<1)n=1;
+ if(n>16)n=16;
+
+ document.querySelectorAll(".page").forEach(function(p){
+  p.classList.remove("active");
+ });
+
+ document.getElementById("page"+n).classList.add("active");
+ current=n;
+ document.getElementById("counter").textContent=n+" / 16";
+ window.scrollTo(0,0);
+}
+
+function next(){show(current+1)}
+function prev(){show(current-1)}
+
+function letter(n){
+ const x=document.getElementById("l"+n);
+ x.style.display=x.style.display==="block"?"none":"block";
+}
+
+function openEnvelope(){
+ document.getElementById("env").classList.add("open");
+}
+
+/* keyboard navigation */
+document.addEventListener("keydown",function(e){
+ if(e.key==="ArrowRight")next();
+ if(e.key==="ArrowLeft")prev();
+});
+
+/* 100 I love yous */
+let words="";
+for(let i=1;i<=100;i++){
+ words+=i+". I love you. 🤍 ";
+}
+document.getElementById("hundred").innerHTML=words;
+
+/* puzzle */
+let tiles=[1,2,3,4,5,6,7,8,9];
+
+function drawPuzzle(){
+ const box=document.getElementById("puzzle");
+ box.innerHTML="";
+
+ tiles.forEach(function(v,i){
+  const d=document.createElement("div");
+  d.className="piece";
+  d.textContent=v===5?"🤍":v;
+
+  d.onclick=function(){
+   const z=tiles.indexOf(5);
+
+   if(Math.abs(i-z)===1 || Math.abs(i-z)===3){
+    let temp=tiles[i];
+    tiles[i]=tiles[z];
+    tiles[z]=temp;
+    drawPuzzle();
+   }
+  };
+
+  box.appendChild(d);
+ });
+
+ if(tiles.join("")==="123456789"){
+  document.getElementById("done").style.display="block";
+ }
+}
+
+drawPuzzle();
+</script>
+
+</body>
+</html>
